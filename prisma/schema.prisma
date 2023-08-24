@@ -1,0 +1,99 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "cockroachdb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  username     String  @unique
+  passwordHash String? @map("password_hash")
+  firstName    String  @map("first_name")
+  lastName     String  @map("last_name")
+
+  @@map("users")
+}
+
+model Hackathon {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name      String
+  slug      String
+  startDate DateTime @map("start_date") @db.Date
+  endDate   DateTime @map("end_date") @db.Date
+  website   String?
+
+  staff     HackathonStaff[]
+  challenge Challenge?
+  workshop  Workshop?
+
+  @@map("hackathons")
+}
+
+model Staff {
+  id        String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  firstName String  @map("first_name")
+  lastName  String  @map("last_name")
+  title     String
+  email     String
+  image     String
+  askAbout  String  @map("ask_about")
+  location  String?
+
+  hackathons HackathonStaff[]
+
+  @@map("staff")
+}
+
+enum HackathonRole {
+  mentor
+  judge
+  recruiter
+
+  @@map("hackathon_role")
+}
+
+model HackathonStaff {
+  hackathonId String          @map("hackathon_id") @db.Uuid
+  staffId     String          @map("staff_id") @db.Uuid
+  roles       HackathonRole[]
+
+  hackathon Hackathon @relation(fields: [hackathonId], references: [id])
+  staff     Staff     @relation(fields: [staffId], references: [id])
+
+  @@id([staffId, hackathonId])
+  @@index([roles], type: Gin)
+  @@map("hackathon_staff")
+}
+
+model Challenge {
+  id          String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  hackathonId String  @unique @map("hackathon_id") @db.Uuid
+  title       String
+  description String
+  prize       String
+  image       String?
+
+  hackathon Hackathon @relation(fields: [hackathonId], references: [id])
+
+  @@map("challenges")
+}
+
+model Workshop {
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  hackathonId String   @unique @map("hackathon_id") @db.Uuid
+  title       String
+  description String
+  location    String?
+  url         String
+  date        DateTime @db.Timestamptz(6)
+
+  hackathon Hackathon @relation(fields: [hackathonId], references: [id])
+
+  @@map("workshops")
+}

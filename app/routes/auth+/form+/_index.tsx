@@ -7,7 +7,7 @@ import { AuthorizationError } from "remix-auth";
 import { FormStrategy } from "remix-auth-form";
 import { z } from "zod";
 
-import { ErrorList, Field, SubmitButton } from "~/components/form.ts";
+import { ErrorList, Field, SubmitButton } from "~/components/form.tsx";
 import {
   DEFAULT_SUCCESS_REDIRECT,
   authenticator

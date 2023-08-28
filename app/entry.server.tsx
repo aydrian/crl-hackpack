@@ -14,6 +14,8 @@ import { renderToPipeableStream } from "react-dom/server";
 
 import "~/utils/env.server.ts";
 
+import { NonceProvider } from "./utils/nonce-provider.ts";
+
 const ABORT_DELAY = 5_000;
 
 export default function handleRequest(
@@ -34,7 +36,8 @@ export default function handleRequest(
         request,
         responseStatusCode,
         responseHeaders,
-        remixContext
+        remixContext,
+        loadContext
       );
 }
 
@@ -91,16 +94,20 @@ function handleBrowserRequest(
   request: Request,
   responseStatusCode: number,
   responseHeaders: Headers,
-  remixContext: EntryContext
+  remixContext: EntryContext,
+  loadContext: AppLoadContext
 ) {
+  const nonce = String(loadContext.cspNonce) ?? undefined;
   return new Promise((resolve, reject) => {
     let shellRendered = false;
     const { abort, pipe } = renderToPipeableStream(
-      <RemixServer
-        abortDelay={ABORT_DELAY}
-        context={remixContext}
-        url={request.url}
-      />,
+      <NonceProvider value={nonce}>
+        <RemixServer
+          abortDelay={ABORT_DELAY}
+          context={remixContext}
+          url={request.url}
+        />
+      </NonceProvider>,
       {
         onError(error: unknown) {
           responseStatusCode = 500;

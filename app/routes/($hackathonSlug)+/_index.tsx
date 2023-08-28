@@ -9,15 +9,13 @@ export async function loader({ request }: LoaderArgs) {
 export default function Index() {
   return (
     <div>
-      <h1>Get Started</h1>
-      <TrackingLink
-        href="https://cockroachlabs.cloud/signup"
-        referralId="hackathon_hackthenorth2023"
-        source="hackthenorth2023"
-      >
+      <h1 className="mb-4 font-poppins text-4xl font-bold leading-none tracking-tight">
+        Get Started
+      </h1>
+      <TrackingLink href="https://cockroachlabs.cloud/signup">
         Sign up
       </TrackingLink>
-      <TrackingLink href="https://cockroachlabs.com" source="hackthenorth2023">
+      <TrackingLink href="https://cockroachlabs.com">
         Cockroach Labs
       </TrackingLink>
     </div>

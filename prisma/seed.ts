@@ -13,8 +13,10 @@ async function seed() {
       endDate: nextWeek,
       id: hackathonId,
       name: "Hack the North",
-      slug: "hackthenorth2023",
+      referralId: "hackathon_hackthenorth2023",
+      slug: "htn-2023",
       startDate: today,
+      utmSource: "hackthenorth2023",
       website: "https://hackthenorth.com/"
     }
   });
@@ -23,14 +25,15 @@ async function seed() {
   const bilalId = "4057040c-7603-47a6-85e7-9076578663d7";
   const lesleyId = "cac55508-4fa5-4294-a941-3434b2508439";
 
-  Promise.all([
+  await Promise.all([
     prisma.staff.create({
       data: {
         askAbout: "CockroachDB, Web Applications, React, JavaScript/TypeScript",
         email: "aydrian@cockroachlabs.com",
         firstName: "Aydrian",
         id: aydrianId,
-        image: "",
+        image:
+          "https://pbs.twimg.com/profile_images/1637838912243617793/XmhcZyZy_400x400.jpg",
         lastName: "Howard",
         location: "New York, NY",
         title: "Developer Advocate"
@@ -42,7 +45,8 @@ async function seed() {
         email: "bilal@cockroachlabs.com",
         firstName: "Bilal",
         id: bilalId,
-        image: "",
+        image:
+          "https://pbs.twimg.com/profile_images/1491974903985278978/b82RDhVg_400x400.jpg",
         lastName: "Akhtar",
         location: "Toronto, ON",
         title: "Member of Technical Staff"
@@ -54,7 +58,8 @@ async function seed() {
         email: "lesley@cockroachlabs.com",
         firstName: "Lesley",
         id: lesleyId,
-        image: "",
+        image:
+          "https://pbs.twimg.com/profile_images/981627137605165056/McK1RG9N_400x400.jpg",
         lastName: "Chow",
         location: "Las Vegas, NV",
         title: "Senior Recruiter"
@@ -62,11 +67,14 @@ async function seed() {
     })
   ]);
 
-  Promise.all([
+  const workshopDate = new Date();
+  workshopDate.setHours(20, 30, 0, 0);
+
+  await Promise.all([
     prisma.hackathonStaff.createMany({
       data: [
         { hackathonId, roles: ["judge", "mentor"], staffId: aydrianId },
-        { hackathonId, roles: ["mentor"], staffId: bilalId },
+        { alumYear: "2019", hackathonId, roles: ["mentor"], staffId: bilalId },
         { hackathonId, roles: ["recruiter"], staffId: lesleyId }
       ]
     }),
@@ -82,7 +90,7 @@ async function seed() {
     }),
     prisma.workshop.create({
       data: {
-        date: new Date(),
+        date: workshopDate,
         description: "Learn SQL with a Python and React Full-stack Application",
         hackathonId,
         id: "c5419c8c-7791-4900-89c9-dec6261b0293",

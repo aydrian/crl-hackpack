@@ -21,12 +21,14 @@ model User {
 }
 
 model Hackathon {
-  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  name      String
-  slug      String   @unique
-  startDate DateTime @map("start_date") @db.Date
-  endDate   DateTime @map("end_date") @db.Date
-  website   String?
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name       String
+  slug       String   @unique
+  startDate  DateTime @map("start_date") @db.Date
+  endDate    DateTime @map("end_date") @db.Date
+  utmSource  String   @map("utm_source")
+  referralId String   @map("referral_id")
+  website    String?
 
   staff     HackathonStaff[]
   challenge Challenge?
@@ -62,6 +64,7 @@ model HackathonStaff {
   hackathonId String          @map("hackathon_id") @db.Uuid
   staffId     String          @map("staff_id") @db.Uuid
   roles       HackathonRole[]
+  alumYear    String?         @map("alum_year")
 
   hackathon Hackathon @relation(fields: [hackathonId], references: [id])
   staff     Staff     @relation(fields: [staffId], references: [id])

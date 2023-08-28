@@ -1,9 +1,10 @@
 import { type LoaderArgs, Response, json } from "@remix-run/node";
 import { NavLink, Outlet, useLoaderData } from "@remix-run/react";
 
+import { Icon } from "~/components/icon.tsx";
 import { prisma } from "~/utils/db.server.ts";
 
-export async function loader({ params, request }: LoaderArgs) {
+export async function loader({ params }: LoaderArgs) {
   const { hackathonSlug: slug } = params;
   const hackathon = slug
     ? await prisma.hackathon
@@ -30,12 +31,18 @@ export default function Layout() {
   return (
     <>
       <header>
-        <h1>Cockroach Labs Hackpack</h1>
-        {hackathon ? <h2>{hackathon.name}</h2> : null}
-        <nav className="flex justify-center gap-4">
+        <h1 className="text-center font-poppins text-4xl font-bold leading-none tracking-tight">
+          Cockroach Labs Hackpack
+        </h1>
+        {hackathon ? (
+          <h2 className="text-center font-poppins text-3xl font-bold leading-none tracking-tight text-crl-deep-purple">
+            {hackathon.name}
+          </h2>
+        ) : null}
+        <nav className="mt-2 flex justify-center gap-4">
           <NavLink
             className={({ isActive }) =>
-              isActive ? "text-crl-electric-purple font-bold" : ""
+              isActive ? "font-bold text-crl-electric-purple" : ""
             }
             to="./"
           >
@@ -43,7 +50,7 @@ export default function Layout() {
           </NavLink>
           <NavLink
             className={({ isActive }) =>
-              isActive ? "text-crl-electric-purple font-bold" : ""
+              isActive ? "font-bold text-crl-electric-purple" : ""
             }
             to="./features"
           >
@@ -52,7 +59,7 @@ export default function Layout() {
           {hackathon?.challenge ? (
             <NavLink
               className={({ isActive }) =>
-                isActive ? "text-crl-electric-purple font-bold" : ""
+                isActive ? "font-bold text-crl-electric-purple" : ""
               }
               to="./challenge"
             >
@@ -62,7 +69,7 @@ export default function Layout() {
           {hackathon?.workshop ? (
             <NavLink
               className={({ isActive }) =>
-                isActive ? "text-crl-electric-purple font-bold" : ""
+                isActive ? "font-bold text-crl-electric-purple" : ""
               }
               to="./workshop"
             >
@@ -71,7 +78,7 @@ export default function Layout() {
           ) : null}
           <NavLink
             className={({ isActive }) =>
-              isActive ? "text-crl-electric-purple font-bold" : ""
+              isActive ? "font-bold text-crl-electric-purple" : ""
             }
             to="./careers"
           >
@@ -79,7 +86,7 @@ export default function Layout() {
           </NavLink>
           <NavLink
             className={({ isActive }) =>
-              isActive ? "text-crl-electric-purple font-bold" : ""
+              isActive ? "font-bold text-crl-electric-purple" : ""
             }
             to="./help"
           >
@@ -87,10 +94,22 @@ export default function Layout() {
           </NavLink>
         </nav>
       </header>
-      <main>
+      <main className="grow">
         <Outlet />
       </main>
-      <footer>Footer</footer>
+      <footer className="flex items-center justify-between bg-crl-deep-purple p-4 text-sm font-bold text-white">
+        <div className="flex flex-col text-xs">Cockroach Labs</div>
+        <div className="flex items-center gap-2">
+          <a
+            href="https://github.com/aydrian/crl-hackpack"
+            rel="noreferrer"
+            target="_blank"
+          >
+            <Icon className="h-8 w-8" name="github" />
+            <span className="sr-only">GitHub Repo</span>
+          </a>
+        </div>
+      </footer>
     </>
   );
 }

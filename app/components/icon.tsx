@@ -15,3 +15,28 @@ export function Icon({
     </svg>
   );
 }
+
+export function IconGradient({
+  name,
+  ...props
+}: SVGProps<SVGSVGElement> & {
+  name: IconName;
+}) {
+  return (
+    <svg {...props}>
+      <linearGradient id="icon-gradient">
+        <stop
+          className="[--start-color:theme(colors.crl.starfleet-blue)]"
+          offset="0"
+          stopColor="var(--start-color)"
+        ></stop>
+        <stop
+          className="[--end-color:theme(colors.crl.electric-purple)]"
+          offset="1"
+          stopColor="var(--end-color)"
+        ></stop>
+      </linearGradient>
+      <use fill="url(#icon-gradient)" href={`${spriteHref}#${name}`} />
+    </svg>
+  );
+}

@@ -1,5 +1,6 @@
-/** @type {import('tailwindcss').Config} */
-module.exports = {
+import type { Config } from "tailwindcss";
+
+export default {
   content: [
     "./pages/**/*.{ts,tsx}",
     "./components/**/*.{ts,tsx}",
@@ -20,6 +21,9 @@ module.exports = {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out"
+      },
+      backgroundImage: {
+        "hero-pattern": "url('/img/hero-pattern.jpg')"
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -56,7 +60,8 @@ module.exports = {
             700: "#394455",
             800: "#242a35",
             900: "#060c12"
-          }
+          },
+          "starfleet-blue": "#0496ff"
         },
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
@@ -87,14 +92,14 @@ module.exports = {
       },
       keyframes: {
         "accordion-down": {
-          from: { height: 0 },
+          from: { height: "0" },
           to: { height: "var(--radix-accordion-content-height)" }
         },
         "accordion-up": {
           from: { height: "var(--radix-accordion-content-height)" },
-          to: { height: 0 }
+          to: { height: "0" }
         }
       }
     }
   }
-};
+} satisfies Config;

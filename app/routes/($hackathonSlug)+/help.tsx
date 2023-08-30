@@ -12,30 +12,21 @@ import {
   CardHeader,
   CardTitle
 } from "~/components/ui/card.tsx";
-import { prisma } from "~/utils/db.server.ts";
+import { findBySlug } from "~/utils/hackathons.server.ts";
 import { cn } from "~/utils/misc.ts";
 
 export async function loader({ params }: LoaderArgs) {
-  const { hackathonSlug: slug } = params;
-  const hackathon = slug
-    ? await prisma.hackathon
-        .findUniqueOrThrow({
-          select: {
-            id: true,
-            name: true,
-            slug: true,
-            staff: {
-              orderBy: { staff: { firstName: "asc" } },
-              select: { alumYear: true, roles: true, staff: true }
-            }
-          },
-          where: { slug }
-        })
-        .catch((err) => {
-          console.error(err);
-          throw new Response(null, { status: 404, statusText: "Not Found" });
-        })
-    : null;
+  const { hackathonSlug } = params;
+  const hackathon = await findBySlug(hackathonSlug, {
+    id: true,
+    name: true,
+    slug: true,
+    staff: {
+      orderBy: { staff: { firstName: "asc" } },
+      select: { alumYear: true, roles: true, staff: true }
+    }
+  });
+
   return json({ hackathon });
 }
 
@@ -43,9 +34,14 @@ export default function Help() {
   const { hackathon } = useLoaderData<typeof loader>();
   return (
     <>
-      <h1 className="mb-4 font-poppins text-4xl font-bold leading-none tracking-tight">
-        Get Help
-      </h1>
+      <div className="bg-hero-pattern flex flex-col items-center justify-center gap-2 bg-cover bg-no-repeat p-4 text-white">
+        <h1 className="font-poppins text-4xl font-bold leading-none tracking-tight">
+          Get Help
+        </h1>
+        <code className="font-mono text-xl">
+          &#47;* Survive anything. Thrive everywhere. */
+        </code>
+      </div>
       {hackathon ? (
         <section className="mx-auto max-w-4xl p-4">
           <h2 className="font-poppins text-3xl font-bold leading-none tracking-tight text-crl-deep-purple">
@@ -71,7 +67,9 @@ export default function Help() {
                   <CardTitle>{`${staff.firstName} ${staff.lastName}`}</CardTitle>
                   <CardDescription>
                     <div>{staff.title}</div>
-                    <div className="text-xs font-light">{staff.location}</div>
+                    {staff.location ? (
+                      <div className="text-xs font-light">{staff.location}</div>
+                    ) : null}
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="p-4 pt-0">

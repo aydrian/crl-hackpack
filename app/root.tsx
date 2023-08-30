@@ -6,32 +6,39 @@ import {
   Meta,
   Outlet,
   Scripts,
-  ScrollRestoration
+  ScrollRestoration,
+  useLoaderData,
+  useRouteLoaderData
 } from "@remix-run/react";
+import { useEffect } from "react";
 
 import iconHref from "~/components/icons/sprite.svg";
+import { Toaster } from "~/components/ui/toaster.tsx";
+import { useToast } from "~/components/ui/use-toast.ts";
 import styles from "~/tailwind.css";
 import { ClientHintCheck, getHints } from "~/utils/client-hints.tsx";
-import { prisma } from "~/utils/db.server.ts";
+import * as hackathons from "~/utils/hackathons.server.ts";
+// import { getFlashSession } from "~/utils/flash-session.server.ts";
 import { useNonce } from "~/utils/nonce-provider.ts";
 
+import { type FlashSessionValues } from "./utils/flash-session.server.ts";
+
 export async function loader({ params, request }: LoaderArgs) {
-  const { hackathonSlug: slug } = params;
-  const tracking = slug
-    ? await prisma.hackathon
-        .findUniqueOrThrow({
-          select: {
-            referralId: true,
-            utmSource: true
-          },
-          where: { slug }
-        })
-        .catch((err) => {
-          console.error(err);
-          throw new Response(null, { status: 404, statusText: "Not Found" });
-        })
+  // const { flash, headers } = await getFlashSession(request);
+  const { hackathonSlug } = params;
+  const tracking = await hackathons.findBySlug(hackathonSlug, {
+    referralId: true,
+    utmSource: true
+  });
+
+  const hackathon = !hackathonSlug
+    ? await hackathons.findCurrent({ name: true, slug: true }, 3)
     : null;
-  return json({ requestInfo: { hints: getHints(request) }, tracking });
+  const flash: FlashSessionValues = hackathon
+    ? { toast: { text: `${hackathon.name}? ${hackathon.slug}` } }
+    : {};
+
+  return json({ flash, requestInfo: { hints: getHints(request) }, tracking });
 }
 
 export const links: LinksFunction = () => [
@@ -44,7 +51,16 @@ export const links: LinksFunction = () => [
 ];
 
 export default function App() {
+  const { flash } = useLoaderData<typeof loader>();
   const nonce = useNonce();
+  const { toast } = useToast();
+
+  useEffect(() => {
+    if (flash?.toast) {
+      const { text } = flash.toast;
+      toast({ description: text });
+    }
+  }, [flash?.toast, toast]);
   return (
     <html lang="en">
       <head>
@@ -56,10 +72,15 @@ export default function App() {
       </head>
       <body className="flex min-h-screen flex-col">
         <Outlet />
-        <ScrollRestoration />
-        <Scripts />
-        <LiveReload />
+        <Toaster />
+        <ScrollRestoration nonce={nonce} />
+        <Scripts nonce={nonce} />
+        <LiveReload nonce={nonce} />
       </body>
     </html>
   );
+}
+
+export function useRootLoaderData() {
+  return useRouteLoaderData<typeof loader>("root");
 }

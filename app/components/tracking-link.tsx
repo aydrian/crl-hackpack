@@ -1,6 +1,4 @@
-import { useRouteLoaderData } from "@remix-run/react";
-
-import { type loader as rootLoader } from "~/root.tsx";
+import { useRootLoaderData } from "~/root.tsx";
 
 export function TrackingLink({
   children,
@@ -13,7 +11,7 @@ export function TrackingLink({
   referralId?: string;
   source?: string;
 }) {
-  const rootData = useRouteLoaderData<typeof rootLoader>("root");
+  const rootData = useRootLoaderData();
   const url = new URL(href);
   url.searchParams.append(
     "utm_source",

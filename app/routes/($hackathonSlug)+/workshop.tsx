@@ -3,26 +3,17 @@ import { useLoaderData } from "@remix-run/react";
 
 import { Button } from "~/components/ui/button.tsx";
 import { useHints } from "~/utils/client-hints.tsx";
-import { prisma } from "~/utils/db.server.ts";
+import { findBySlug } from "~/utils/hackathons.server.ts";
 
 export async function loader({ params }: LoaderArgs) {
-  const { hackathonSlug: slug } = params;
-  const hackathon = slug
-    ? await prisma.hackathon
-        .findUniqueOrThrow({
-          select: {
-            id: true,
-            name: true,
-            slug: true,
-            workshop: true
-          },
-          where: { slug }
-        })
-        .catch((err) => {
-          console.error(err);
-          throw new Response(null, { status: 404, statusText: "Not Found" });
-        })
-    : null;
+  const { hackathonSlug } = params;
+  const hackathon = await findBySlug(hackathonSlug, {
+    id: true,
+    name: true,
+    slug: true,
+    workshop: true
+  });
+
   if (!hackathon?.workshop) {
     throw new Response(null, { status: 404, statusText: "Not Found" });
   }
@@ -34,9 +25,12 @@ export default function Workshop() {
   const { timeZone } = useHints();
   return (
     <>
-      <h1 className="mb-4 font-poppins text-4xl font-bold leading-none tracking-tight">
-        Workshop
-      </h1>
+      <div className="bg-hero-pattern flex flex-col items-center justify-center gap-2 bg-cover bg-no-repeat p-4 text-white">
+        <h1 className="font-poppins text-4xl font-bold leading-none tracking-tight">
+          Workshop
+        </h1>
+        <code className="font-mono text-xl">&#47;* Build your skills */</code>
+      </div>
       {workshop ? (
         <section>
           <h2 className="font-poppins text-3xl font-bold leading-none tracking-tight text-crl-deep-purple">

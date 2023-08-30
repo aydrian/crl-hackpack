@@ -2,7 +2,6 @@ import { type LoaderArgs, json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 
 import { IconGradient } from "~/components/icon.tsx";
-import { useHints } from "~/utils/client-hints.tsx";
 import { findBySlug } from "~/utils/hackathons.server.ts";
 
 export async function loader({ params }: LoaderArgs) {
@@ -19,7 +18,6 @@ export async function loader({ params }: LoaderArgs) {
 
 export default function Index() {
   const { hackathon } = useLoaderData<typeof loader>();
-  const { timeZone } = useHints();
   return (
     <>
       <div className="bg-hero-pattern flex flex-col items-center justify-center gap-2 bg-cover bg-no-repeat p-4 text-white">
@@ -36,7 +34,7 @@ export default function Index() {
           <div className="text-xl font-medium">
             {new Intl.DateTimeFormat(undefined, {
               dateStyle: "long",
-              timeZone
+              timeZone: "UTC"
             }).formatRange(
               new Date(hackathon.startDate),
               new Date(hackathon.endDate)

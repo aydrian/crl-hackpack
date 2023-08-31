@@ -10,35 +10,46 @@ import {
   useLoaderData,
   useRouteLoaderData
 } from "@remix-run/react";
-import { useEffect } from "react";
 
 import iconHref from "~/components/icons/sprite.svg";
 import { Toaster } from "~/components/ui/toaster.tsx";
-import { useToast } from "~/components/ui/use-toast.ts";
 import styles from "~/tailwind.css";
 import { ClientHintCheck, getHints } from "~/utils/client-hints.tsx";
 import * as hackathons from "~/utils/hackathons.server.ts";
-// import { getFlashSession } from "~/utils/flash-session.server.ts";
 import { useNonce } from "~/utils/nonce-provider.ts";
 
-import { type FlashSessionValues } from "./utils/flash-session.server.ts";
+import { HackathonBanner } from "./routes/resources+/hackathon-banner.tsx";
+import { bannerCookie } from "./utils/cookies.server.ts";
 
 export async function loader({ params, request }: LoaderArgs) {
-  // const { flash, headers } = await getFlashSession(request);
   const { hackathonSlug } = params;
   const tracking = await hackathons.findBySlug(hackathonSlug, {
     referralId: true,
     utmSource: true
   });
 
-  const hackathon = !hackathonSlug
-    ? await hackathons.findCurrent({ name: true, slug: true }, 3)
-    : null;
-  const flash: FlashSessionValues = hackathon
-    ? { toast: { text: `${hackathon.name}? ${hackathon.slug}` } }
-    : {};
+  const bannerDismissed =
+    (await bannerCookie.parse(request.headers.get("Cookie"))) ?? false;
 
-  return json({ flash, requestInfo: { hints: getHints(request) }, tracking });
+  const currentHackathon =
+    !hackathonSlug && !bannerDismissed
+      ? await hackathons.findCurrent(
+          {
+            endDate: true,
+            name: true,
+            slug: true,
+            startDate: true,
+            website: true
+          },
+          3
+        )
+      : null;
+
+  return json({
+    currentHackathon,
+    requestInfo: { hints: getHints(request) },
+    tracking
+  });
 }
 
 export const links: LinksFunction = () => [
@@ -51,16 +62,9 @@ export const links: LinksFunction = () => [
 ];
 
 export default function App() {
-  const { flash } = useLoaderData<typeof loader>();
+  const { currentHackathon } = useLoaderData<typeof loader>();
   const nonce = useNonce();
-  const { toast } = useToast();
 
-  useEffect(() => {
-    if (flash?.toast) {
-      const { text } = flash.toast;
-      toast({ description: text });
-    }
-  }, [flash?.toast, toast]);
   return (
     <html lang="en">
       <head>
@@ -71,6 +75,9 @@ export default function App() {
         <Links />
       </head>
       <body className="flex min-h-screen flex-col">
+        {currentHackathon ? (
+          <HackathonBanner hackathon={currentHackathon} />
+        ) : null}
         <Outlet />
         <Toaster />
         <ScrollRestoration nonce={nonce} />

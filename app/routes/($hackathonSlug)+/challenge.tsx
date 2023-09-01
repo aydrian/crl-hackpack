@@ -22,7 +22,7 @@ export default function Challenge() {
   const { challenge } = hackathon;
   return (
     <>
-      <div className="bg-hero-pattern flex flex-col items-center justify-center gap-2 bg-cover bg-no-repeat p-4 text-white">
+      <div className="flex flex-col items-center justify-center gap-2 bg-hero-pattern bg-cover bg-no-repeat p-4 text-white">
         <h1 className="font-poppins text-4xl font-bold leading-none tracking-tight">
           Challenge
         </h1>
@@ -31,7 +31,7 @@ export default function Challenge() {
         </code>
       </div>
       {challenge ? (
-        <section>
+        <section className="mx-auto max-w-4xl p-4">
           <h2 className="font-poppins text-3xl font-bold leading-none tracking-tight text-crl-deep-purple">
             {challenge.title}
           </h2>

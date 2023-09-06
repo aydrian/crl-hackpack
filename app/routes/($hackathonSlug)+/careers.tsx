@@ -143,11 +143,11 @@ export default function Careers() {
                     <Badge className="absolute bottom-1 right-1 bg-crl-dark-blue text-[8px] opacity-70">{`Class of ${alumYear}`}</Badge>
                   ) : null}
                   <img
+                    alt={`${staff.firstName} ${staff.lastName}`}
                     className={cn(
                       "aspect-square",
                       singleRecruiter ? "w-[125px]" : "w-full"
                     )}
-                    alt={`${staff.firstName} ${staff.lastName}`}
                     src={staff.image}
                   />
                 </div>

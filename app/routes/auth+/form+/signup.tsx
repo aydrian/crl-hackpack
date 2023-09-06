@@ -132,12 +132,12 @@ export function SignUpForm() {
           {...form.props}
         >
           <Field
+            errors={fields.firstName.errors}
+            inputProps={conform.input(fields.firstName)}
             labelProps={{
               children: "First Name",
               htmlFor: fields.firstName.id
             }}
-            errors={fields.firstName.errors}
-            inputProps={conform.input(fields.firstName)}
           />
           <Field
             errors={fields.lastName.errors}
@@ -155,6 +155,7 @@ export function SignUpForm() {
             labelProps={{ children: "Password", htmlFor: fields.password.id }}
           />
           <Field
+            errors={fields.confirmPassword.errors}
             inputProps={conform.input(fields.confirmPassword, {
               type: "password"
             })}
@@ -162,7 +163,6 @@ export function SignUpForm() {
               children: "Confirm Password",
               htmlFor: fields.confirmPassword.id
             }}
-            errors={fields.confirmPassword.errors}
           />
           <ErrorList errors={form.errors} id={form.errorId} />
           <SubmitButton

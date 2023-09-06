@@ -1,4 +1,9 @@
-import { type LoaderArgs, Response, json } from "@remix-run/node";
+import {
+  type LoaderArgs,
+  Response,
+  type V2_MetaFunction,
+  json
+} from "@remix-run/node";
 import { NavLink, Outlet, useLoaderData } from "@remix-run/react";
 
 import { Icon } from "~/components/icon.tsx";
@@ -14,9 +19,11 @@ export async function loader({ params }: LoaderArgs) {
         .findUniqueOrThrow({
           select: {
             challenge: { select: { id: true } },
+            endDate: true,
             id: true,
             name: true,
             slug: true,
+            startDate: true,
             workshop: { select: { id: true } }
           },
           where: { slug }
@@ -28,6 +35,52 @@ export async function loader({ params }: LoaderArgs) {
     : null;
   return json({ hackathon });
 }
+
+export const meta: V2_MetaFunction<typeof loader> = ({ data }) => {
+  const title = data?.hackathon
+    ? `Cockroach Labs HackPack for ${data?.hackathon?.name}`
+    : "Cockroach Labs HackPack";
+  const description = data?.hackathon
+    ? `Hackathon resources for ${data.hackathon.name}`
+    : "A resource for hackathons";
+
+  let imgUrl = "https://crl-hackpack.fly.dev/social-preview.png";
+
+  if (data?.hackathon) {
+    const ogUrl = new URL(
+      "https://crl-hackpack.fly.dev/resources/social-preview.png"
+    );
+    ogUrl.searchParams.set("hackathon", data.hackathon.name);
+    ogUrl.searchParams.set(
+      "dates",
+      new Intl.DateTimeFormat(undefined, {
+        dateStyle: "long",
+        timeZone: "UTC"
+      }).formatRange(
+        new Date(data.hackathon.startDate),
+        new Date(data.hackathon.endDate)
+      )
+    );
+    imgUrl = ogUrl.toString();
+  }
+
+  return [
+    { title },
+    { content: "summary_large_image", name: "twitter:card" },
+    { "og:image": imgUrl },
+    { content: imgUrl, name: "twitter:image" },
+    { content: "@cockroachdb", name: "twitter:site" },
+    { content: "@cockroachdb", name: "twitter:creator" },
+    {
+      content: `https://crl-hackpack.fly.dev/${data?.hackathon?.slug ?? ""}`,
+      property: "og:url"
+    },
+    { content: title, property: "og:site_name" },
+    { content: description, name: "description" },
+    { content: description, name: "twitter:description" },
+    { content: description, property: "og:description" }
+  ];
+};
 
 export default function Layout() {
   const { hackathon } = useLoaderData<typeof loader>();

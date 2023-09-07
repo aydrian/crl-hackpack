@@ -48,7 +48,7 @@ export const meta: V2_MetaFunction<typeof loader> = ({ data }) => {
 
   if (data?.hackathon) {
     const ogUrl = new URL(
-      "https://crl-hackpack.fly.dev/resources/social-preview.png"
+      "https://crl-hackpack.fly.dev/resources/social-image.png"
     );
     ogUrl.searchParams.set("hackathon", data.hackathon.name);
     ogUrl.searchParams.set(

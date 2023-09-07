@@ -21,7 +21,7 @@ export async function loader({ request }: LoaderArgs) {
 
   const jsx = (
     <div tw="h-full w-full flex flex-col">
-      <div tw="flex justify-center items-center h-[125px]">
+      <div tw="flex justify-center items-center h-[125px] bg-white">
         <img
           alt="Cockroach Labs"
           height={94}

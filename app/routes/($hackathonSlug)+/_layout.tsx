@@ -66,14 +66,16 @@ export const meta: V2_MetaFunction<typeof loader> = ({ data }) => {
 
   return [
     { title },
+    { content: title, name: "og:title" },
     { content: "summary_large_image", name: "twitter:card" },
-    { "og:image": imgUrl },
+    { content: imgUrl, name: "og:image" },
     { content: imgUrl, name: "twitter:image" },
+    { content: title, name: "twitter:title" },
     { content: "@cockroachdb", name: "twitter:site" },
     { content: "@cockroachdb", name: "twitter:creator" },
     {
       content: `https://crl-hackpack.fly.dev/${data?.hackathon?.slug ?? ""}`,
-      property: "og:url"
+      name: "og:url"
     },
     { content: title, property: "og:site_name" },
     { content: description, name: "description" },

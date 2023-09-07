@@ -51,16 +51,8 @@ export const meta: V2_MetaFunction<typeof loader> = ({ data }) => {
       "https://crl-hackpack.fly.dev/resources/social-image.png"
     );
     ogUrl.searchParams.set("hackathon", data.hackathon.name);
-    ogUrl.searchParams.set(
-      "dates",
-      new Intl.DateTimeFormat(undefined, {
-        dateStyle: "long",
-        timeZone: "UTC"
-      }).formatRange(
-        new Date(data.hackathon.startDate),
-        new Date(data.hackathon.endDate)
-      )
-    );
+    ogUrl.searchParams.set("startDate", data.hackathon.startDate);
+    ogUrl.searchParams.set("endDate", data.hackathon.endDate);
     imgUrl = ogUrl.toString();
   }
 

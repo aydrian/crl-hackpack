@@ -2,6 +2,7 @@ import type { LoaderArgs } from "@remix-run/node";
 
 import satori, { type SatoriOptions } from "satori";
 import svg2img from "svg2img";
+import invariant from "tiny-invariant";
 
 declare module "react" {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -13,7 +14,20 @@ declare module "react" {
 export async function loader({ request }: LoaderArgs) {
   const url = new URL(request.url);
   const hackathon = url.searchParams.get("hackathon");
-  const dates = url.searchParams.get("dates");
+  invariant(typeof hackathon === "string", "hackathon queryparam is expected");
+  const startDate = url.searchParams.get("startDate");
+  invariant(typeof startDate === "string", "startDate queryparam is expected");
+  const endDate = url.searchParams.get("endDate");
+  invariant(typeof endDate === "string", "endDate queryparam is expected");
+
+  const dates = new Intl.DateTimeFormat(undefined, {
+    dateStyle: "long",
+    timeZone: "UTC"
+  })
+    .formatRange(new Date(startDate), new Date(endDate))
+    .replace(/\u2009/g, " ");
+  console.log({ dates, endDate, startDate });
+
   const baseUrl =
     process.env.NODE_ENV === "development"
       ? "http://localhost:3000/"
@@ -54,22 +68,29 @@ export async function loader({ request }: LoaderArgs) {
             />
           </svg>
         </div>
-        <div tw="flex flex-col justify-center items-center h-[475px] text-white">
-          <h1
-            style={{ lineHeight: "4rem" }}
-            tw="text-9xl font-bold font-poppins"
-          >
-            HackPack
-          </h1>
-          <h2 style={{ lineHeight: "2rem" }} tw="text-[43px] font-semibold">
-            A resource for hackathons
-          </h2>
-          <h3 style={{ lineHeight: ".5rem" }} tw="text-4xl font-medium">
-            {hackathon}
-          </h3>
-          <p style={{ lineHeight: "0.25rem" }} tw="text-3xl font-medium">
-            {dates}
-          </p>
+        <div
+          style={{ gap: "32px" }}
+          tw="flex flex-col justify-center items-center h-[475px] text-white"
+        >
+          <div tw="flex flex-col justify-center items-center">
+            <h1
+              style={{ fontFamily: "Poppins", lineHeight: "4rem" }}
+              tw="text-9xl font-bold"
+            >
+              HackPack
+            </h1>
+            <h2 style={{ lineHeight: "2rem" }} tw="text-[43px] font-semibold">
+              A resource for hackathons
+            </h2>
+          </div>
+          <div tw="flex flex-col justify-center items-center">
+            <h2 style={{ lineHeight: "1rem" }} tw="text-6xl font-semibold">
+              {hackathon}
+            </h2>
+            <p style={{ lineHeight: "1rem" }} tw="text-5xl font-medium">
+              {dates}
+            </p>
+          </div>
         </div>
       </div>
     </div>

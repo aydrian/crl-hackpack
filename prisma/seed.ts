@@ -46,37 +46,47 @@ async function seed() {
         askAbout: "CockroachDB, Web Applications, React, JavaScript/TypeScript",
         email: "aydrian@cockroachlabs.com",
         firstName: "Aydrian",
+        github: "https://github.com/aydrian",
         id: aydrianId,
         image:
           "https://pbs.twimg.com/profile_images/1637838912243617793/XmhcZyZy_400x400.jpg",
+        instagram: "https://www.instagram.com/itsaydrian/",
         lastName: "Howard",
+        linkedin: "https://www.linkedin.com/in/aydrian/",
         location: "New York, NY",
-        title: "Developer Advocate"
+        title: "Developer Advocate",
+        twitter: "https://twitter.com/itsaydrian",
+        website: "https://itsaydrian.com"
       }
     }),
     prisma.staff.create({
       data: {
-        askAbout: "CockroachDB, Go",
+        askAbout:
+          "CockroachDB, Python, SQL, Storage, AWS, EC2, S3, Being an Intern, Toronto, Life at CockroachDB",
         email: "bilal@cockroachlabs.com",
         firstName: "Bilal",
         id: bilalId,
         image:
           "https://pbs.twimg.com/profile_images/1491974903985278978/b82RDhVg_400x400.jpg",
+        instagram: "https://www.instagram.com/isitbilal/",
         lastName: "Akhtar",
+        linkedin: "https://www.linkedin.com/in/bilalakhtar0/",
         location: "Toronto, ON",
-        title: "Member of Technical Staff"
+        title: "Member of Technical Staff",
+        website: "http://itsbilal.com/"
       }
     }),
     prisma.staff.create({
       data: {
-        askAbout: "Internships, Life at Cockroach Labs",
+        askAbout:
+          "Careers, Life at Cockroach Labs, DEI at Cockroach Labs, Interview Tips & Tricks",
         email: "lesley@cockroachlabs.com",
         firstName: "Lesley",
         id: lesleyId,
         image:
           "https://pbs.twimg.com/profile_images/981627137605165056/McK1RG9N_400x400.jpg",
         lastName: "Chow",
-        location: "Las Vegas, NV",
+        linkedin: "https://www.linkedin.com/in/lesleychow/",
         title: "Senior Recruiter"
       }
     })

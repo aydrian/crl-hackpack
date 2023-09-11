@@ -43,11 +43,11 @@ export default function Careers() {
         <h1 className="font-poppins text-4xl font-bold leading-none tracking-tight">
           Careers
         </h1>
-        <code className="font-mono text-xl">
+        <code className="text-center font-mono text-xl">
           &#47;* Thrive at Cockroach Labs */
         </code>
       </div>
-      <section className="mx-auto max-w-4xl p-4">
+      <section className="mx-auto max-w-5xl p-4">
         <h2 className="font-poppins text-3xl font-bold leading-none tracking-tight text-crl-deep-purple">
           Students / Internship Program
         </h2>
@@ -62,7 +62,7 @@ export default function Careers() {
           has to offer.
         </p>
       </section>
-      <section className="mx-auto max-w-4xl p-4">
+      <section className="mx-auto max-w-5xl p-4">
         <h2 className="font-poppins text-3xl font-bold leading-none tracking-tight text-crl-deep-purple">
           Open Positions
         </h2>
@@ -82,7 +82,7 @@ export default function Careers() {
           .
         </p>
       </section>
-      <section className="mx-auto max-w-4xl p-4">
+      <section className="mx-auto max-w-5xl p-4">
         <h2 className="font-poppins text-3xl font-bold leading-none tracking-tight text-crl-deep-purple">
           FAQs
         </h2>
@@ -115,7 +115,7 @@ export default function Careers() {
         </p>
       </section>
       {hackathon?.staff ? (
-        <section className="mx-auto max-w-4xl p-4">
+        <section className="mx-auto max-w-5xl p-4">
           <h2 className="font-poppins text-3xl font-bold leading-none tracking-tight text-crl-deep-purple">
             Ask the on-site Recruiter
           </h2>

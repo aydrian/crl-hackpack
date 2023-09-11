@@ -1,6 +1,8 @@
+import { type Staff } from "@prisma/client";
 import { type LoaderArgs, json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 
+import { Icon } from "~/components/icon.tsx";
 import { TrackingLink } from "~/components/tracking-link.tsx";
 import { Badge } from "~/components/ui/badge.tsx";
 import { Button } from "~/components/ui/button.tsx";
@@ -34,16 +36,16 @@ export default function Help() {
   const { hackathon } = useLoaderData<typeof loader>();
   return (
     <>
-      <div className="bg-hero-pattern flex flex-col items-center justify-center gap-2 bg-cover bg-no-repeat p-4 text-white">
+      <div className="flex flex-col items-center justify-center gap-2 bg-hero-pattern bg-cover bg-no-repeat p-4 text-white">
         <h1 className="font-poppins text-4xl font-bold leading-none tracking-tight">
           Get Help
         </h1>
-        <code className="font-mono text-xl">
+        <code className="text-center font-mono text-xl">
           &#47;* Survive anything. Thrive everywhere. */
         </code>
       </div>
       {hackathon ? (
-        <section className="mx-auto max-w-4xl p-4">
+        <section className="mx-auto max-w-5xl py-4">
           <h2 className="font-poppins text-3xl font-bold leading-none tracking-tight text-crl-deep-purple">
             On-site Team
           </h2>
@@ -52,10 +54,13 @@ export default function Help() {
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             {hackathon.staff.map(({ alumYear, roles, staff }) => (
-              <Card className="max-w-[210px] overflow-hidden" key={staff.id}>
+              <Card
+                className="flex max-w-[210px] flex-col overflow-hidden"
+                key={staff.id}
+              >
                 <div className="relative">
                   {alumYear ? (
-                    <Badge className="absolute bottom-1.5 right-1.5 bg-crl-dark-blue">{`Class of ${alumYear} Alum`}</Badge>
+                    <div className="absolute bottom-0 right-0 w-full bg-gradient-to-r from-crl-dark-blue via-crl-electric-purple p-1 text-xs font-medium text-white">{`Class of ${alumYear} Alum`}</div>
                   ) : null}
                   <img
                     alt={`${staff.firstName} ${staff.lastName}`}
@@ -67,12 +72,13 @@ export default function Help() {
                   <CardTitle>{`${staff.firstName} ${staff.lastName}`}</CardTitle>
                   <CardDescription>
                     <div>{staff.title}</div>
-                    {staff.location ? (
-                      <div className="text-xs font-light">{staff.location}</div>
-                    ) : null}
+                    <div className="min-h-[1rem] text-xs font-light">
+                      {staff.location}
+                    </div>
                   </CardDescription>
+                  <SocialBar staff={staff} />
                 </CardHeader>
-                <CardContent className="p-4 pt-0">
+                <CardContent className="grow p-4 pt-0">
                   <div className="font-medium">Ask me about...</div>
                   <p className="text-sm font-light text-gray-800">
                     {staff.askAbout}
@@ -97,20 +103,25 @@ export default function Help() {
           </div>
         </section>
       ) : null}
-      <section className="mx-auto max-w-4xl p-4">
+      <section className="mx-auto max-w-5xl py-4">
         <h2 className="font-poppins text-3xl font-bold leading-none tracking-tight text-crl-deep-purple">
+          <Icon
+            className="mr-1 inline-block h-9 w-9"
+            name="building-library-outline"
+          />{" "}
           Docs Hub
         </h2>
         <p className="mb-4 text-gray-800">Search our Documentation Library</p>
         <Button asChild className="bg-crl-electric-purple">
           <TrackingLink href="https://www.cockroachlabs.com/docs/">
-            Join the Community
+            Browse the Docs
           </TrackingLink>
         </Button>
       </section>
-      <section className="mx-auto max-w-4xl p-4">
+      <section className="mx-auto max-w-5xl py-4">
         <h2 className="font-poppins text-3xl font-bold leading-none tracking-tight text-crl-deep-purple">
-          Community Slack
+          <Icon className="mr-1 inline-block h-9 w-9" name="slack" /> Community
+          Slack
         </h2>
         <p className="mb-4 text-gray-800">Ask a question</p>
         <Button asChild className="bg-crl-electric-purple">
@@ -119,8 +130,9 @@ export default function Help() {
           </TrackingLink>
         </Button>
       </section>
-      <section className="mx-auto max-w-4xl p-4">
+      <section className="mx-auto max-w-5xl py-4">
         <h2 className="font-poppins text-3xl font-bold leading-none tracking-tight text-crl-deep-purple">
+          <Icon className="mr-1 inline-block h-9 w-9" name="discourse" />{" "}
           Community Forum
         </h2>
         <p className="mb-4 text-gray-800">Ask a question or search</p>
@@ -130,10 +142,68 @@ export default function Help() {
             rel="noreferrer"
             target="_blank"
           >
-            Join the Forum
+            Search the Forum
           </a>
         </Button>
       </section>
     </>
+  );
+}
+
+function SocialBar({ staff }: { staff: Staff }) {
+  const { github, instagram, linkedin, twitter, website } = staff;
+  return (
+    <div className="flex min-h-[1rem] flex-wrap gap-1 text-crl-deep-purple">
+      {linkedin && (
+        <a
+          className="hover:text-[#0A66C2]"
+          href={linkedin}
+          rel="noreferrer"
+          target="_blank"
+        >
+          <Icon className="h-4 w-4" name="linkedin" />
+        </a>
+      )}
+      {twitter && (
+        <a
+          className="hover:text-[#1D9BF0]"
+          href={twitter}
+          rel="noreferrer"
+          target="_blank"
+        >
+          <Icon className="h-4 w-4" name="twitter" />
+        </a>
+      )}
+      {instagram && (
+        <a
+          className="hover:text-[#E4405F]"
+          href={instagram}
+          rel="noreferrer"
+          target="_blank"
+        >
+          <Icon className="h-4 w-4" name="instagram" />
+        </a>
+      )}
+      {github && (
+        <a
+          className="hover:text-[#181717]"
+          href={github}
+          rel="noreferrer"
+          target="_blank"
+        >
+          <Icon className="h-4 w-4" name="github" />
+        </a>
+      )}
+      {website && (
+        <a
+          className="hover:text-green-700"
+          href={website}
+          rel="noreferrer"
+          target="_blank"
+        >
+          <Icon className="h-4 w-4" name="link-outline" />
+        </a>
+      )}
+    </div>
   );
 }

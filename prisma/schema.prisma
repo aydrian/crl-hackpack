@@ -42,10 +42,15 @@ model Staff {
   firstName String  @map("first_name")
   lastName  String  @map("last_name")
   title     String
-  email     String
+  email     String  @unique
   image     String
   askAbout  String  @map("ask_about")
   location  String?
+  linkedin  String?
+  twitter   String?
+  instagram String?
+  github    String?
+  website   String?
 
   hackathons HackathonStaff[]
 

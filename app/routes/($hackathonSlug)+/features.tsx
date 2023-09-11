@@ -5,10 +5,12 @@ export default function Features() {
         <h1 className="font-poppins text-4xl font-bold leading-none tracking-tight">
           Cool Features
         </h1>
-        <code className="font-mono text-xl">&#47;* Evolve your app */</code>
+        <code className="text-center font-mono text-xl">
+          &#47;* Evolve your app */
+        </code>
       </div>
 
-      <section className="mx-auto max-w-4xl p-4">
+      <section className="mx-auto max-w-5xl p-4">
         <h2 className="font-poppins text-3xl font-bold leading-none tracking-tight text-crl-deep-purple">
           Multi-region
         </h2>

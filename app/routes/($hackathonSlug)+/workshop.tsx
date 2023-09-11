@@ -26,10 +26,12 @@ export default function Workshop() {
   return (
     <>
       <div className="flex flex-col items-center justify-center gap-2 bg-hero-pattern bg-cover bg-no-repeat p-4 text-white">
-        <h1 className="font-poppins text-4xl font-bold leading-none tracking-tight">
+        <h1 className="font-poppins text-5xl font-bold leading-none tracking-tight">
           Workshop
         </h1>
-        <code className="font-mono text-xl">&#47;* Build your skills */</code>
+        <code className="text-center font-mono text-xl">
+          &#47;* Build your skills */
+        </code>
       </div>
       {workshop ? (
         <section className="mx-auto max-w-4xl p-4">

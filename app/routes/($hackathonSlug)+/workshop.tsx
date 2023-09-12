@@ -26,7 +26,7 @@ export default function Workshop() {
   return (
     <>
       <div className="flex flex-col items-center justify-center gap-2 bg-hero-pattern bg-cover bg-no-repeat p-4 text-white">
-        <h1 className="font-poppins text-5xl font-bold leading-none tracking-tight">
+        <h1 className="font-poppins text-4xl font-bold leading-none tracking-tight">
           Workshop
         </h1>
         <code className="text-center font-mono text-xl">
@@ -34,7 +34,7 @@ export default function Workshop() {
         </code>
       </div>
       {workshop ? (
-        <section className="mx-auto max-w-4xl p-4">
+        <section className="mx-auto max-w-5xl p-4">
           <h2 className="font-poppins text-3xl font-bold leading-none tracking-tight text-crl-deep-purple">
             {workshop.title}
           </h2>

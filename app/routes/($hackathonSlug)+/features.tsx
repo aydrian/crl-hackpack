@@ -45,14 +45,6 @@ export default function Features() {
             </figcaption>
             <ul className="list-disc pl-4 text-sm">
               <li>
-                <TrackingLink
-                  className="text-crl-electric-purple hover:text-crl-action-blue hover:underline"
-                  href="https://www.cockroachlabs.com/demos/demo-data-residency/app/"
-                >
-                  Demo: The Art of Data Residency
-                </TrackingLink>
-              </li>
-              <li>
                 <a
                   className="text-crl-electric-purple hover:text-crl-action-blue hover:underline"
                   href="https://www.youtube.com/watch?v=qoexXvuHNfI"
@@ -87,6 +79,14 @@ export default function Features() {
                   Video: Low latency with server and data location in
                   multi-region serverless DB
                 </a>
+              </li>
+              <li>
+                <TrackingLink
+                  className="text-crl-electric-purple hover:text-crl-action-blue hover:underline"
+                  href="https://www.cockroachlabs.com/demos/demo-data-residency/app/"
+                >
+                  Demo: The Art of Data Residency
+                </TrackingLink>
               </li>
             </ul>
           </figure>
@@ -155,7 +155,7 @@ export default function Features() {
           />{" "}
           Stream Data
         </h2>
-        <p className="text-gray-800">
+        <p className="mb-4 text-gray-800">
           Change Data Capture More details..
           <br />
           <TrackingLink
@@ -220,7 +220,7 @@ export default function Features() {
           />{" "}
           CockroachDB as a Document Database
         </h2>
-        <p className="text-gray-800">
+        <p className="mb-4 text-gray-800">
           More details... Working with JSON
           <br />
           <TrackingLink
@@ -267,7 +267,7 @@ export default function Features() {
           />{" "}
           Full Text Search
         </h2>
-        <p className="text-gray-800">
+        <p className="mb-4 text-gray-800">
           More details...
           <br />
           <TrackingLink
@@ -341,7 +341,7 @@ export default function Features() {
           />{" "}
           Intelligent Insights
         </h2>
-        <p className="text-gray-800">
+        <p className="mb-4 text-gray-800">
           More details...
           <br />
           <TrackingLink

@@ -36,7 +36,11 @@ export function IconGradient({
           stopColor="var(--end-color)"
         ></stop>
       </linearGradient>
-      <use fill="url(#icon-gradient)" href={`${spriteHref}#${name}`} />
+      <use
+        fill="url(#icon-gradient)"
+        href={`${spriteHref}#${name}`}
+        stroke="url(#icon-gradient)"
+      />
     </svg>
   );
 }

@@ -292,7 +292,18 @@ export default function Features() {
             <figcaption className="mb-1.5 font-semibold text-crl-deep-purple">
               More Resources
             </figcaption>
-            <ul className="list-disc pl-4 text-sm"></ul>
+            <ul className="list-disc pl-4 text-sm">
+              <li>
+                <a
+                  className="text-crl-electric-purple hover:text-crl-action-blue hover:underline"
+                  href="https://goddard.hashnode.dev/good-enough-text-search"
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  Blog: Good Enough Text Search
+                </a>
+              </li>
+            </ul>
           </figure>
         </div>
       </section>
@@ -329,7 +340,18 @@ export default function Features() {
             <figcaption className="mb-1.5 font-semibold text-crl-deep-purple">
               More Resources
             </figcaption>
-            <ul className="list-disc pl-4 text-sm"></ul>
+            <ul className="list-disc pl-4 text-sm">
+              <li>
+                <a
+                  className="text-crl-electric-purple hover:text-crl-action-blue hover:underline"
+                  href="https://gist.github.com/codingconcepts/0d4c8e5264b5634f4ab2e4ce8ddeae09"
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  Sample Code: Filtering based on Location
+                </a>
+              </li>
+            </ul>
           </figure>
         </div>
       </section>

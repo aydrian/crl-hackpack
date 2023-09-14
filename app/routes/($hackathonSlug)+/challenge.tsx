@@ -31,15 +31,24 @@ export default function Challenge() {
         </code>
       </div>
       {challenge ? (
-        <section className="mx-auto max-w-5xl p-4">
-          <h2 className="font-poppins text-3xl font-bold leading-none tracking-tight text-crl-deep-purple">
-            {challenge.title}
-          </h2>
-          <p>{challenge.description}</p>
-          <h3 className="text-2xl font-semibold leading-none tracking-tight">
-            Prize
-          </h3>
-          <p>{challenge.prize}</p>
+        <section className="mx-auto max-w-5xl p-4 md:flex md:gap-4">
+          {challenge.image ? (
+            <img
+              alt={challenge.title}
+              className="mx-auto mb-4 rounded-md shadow-md md:max-w-xs"
+              src={challenge.image}
+            />
+          ) : null}
+          <div>
+            <h2 className="mx-auto max-w-max bg-gradient-to-r from-crl-dark-blue via-crl-electric-purple to-crl-iridescent-blue bg-clip-text text-center font-poppins text-3xl font-bold leading-none tracking-tight text-transparent">
+              {challenge.title}
+            </h2>
+            <p>{challenge.description}</p>
+            <h3 className="mt-2 text-2xl font-semibold leading-none tracking-tight text-crl-deep-purple">
+              Prize
+            </h3>
+            <p>{challenge.prize}</p>
+          </div>
         </section>
       ) : null}
     </>

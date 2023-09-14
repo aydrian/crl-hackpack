@@ -34,11 +34,11 @@ export default function Workshop() {
         </code>
       </div>
       {workshop ? (
-        <section className="mx-auto max-w-5xl p-4">
-          <h2 className="font-poppins text-3xl font-bold leading-none tracking-tight text-crl-deep-purple">
+        <section className="mx-auto max-w-5xl p-4 text-center">
+          <h2 className="mx-auto mb-1.5 max-w-max bg-gradient-to-r from-crl-dark-blue via-crl-electric-purple to-crl-iridescent-blue bg-clip-text text-center font-poppins text-3xl font-bold leading-none tracking-tight text-transparent">
             {workshop.title}
           </h2>
-          <h3 className="text-2xl font-semibold leading-none tracking-tight">
+          <h3 className="mb-2 text-center text-2xl font-semibold leading-none tracking-tight">
             {new Intl.DateTimeFormat(undefined, {
               dateStyle: "long",
               timeStyle: "short",
@@ -46,10 +46,10 @@ export default function Workshop() {
             }).format(new Date(workshop.date))}{" "}
             in {workshop.location}
           </h3>
-          <p>{workshop.description}</p>
-          <Button asChild className="bg-crl-electric-purple">
+          <p className="text-left">{workshop.description}</p>
+          <Button asChild className="mt-2 bg-crl-electric-purple">
             <a href={workshop.url} rel="noreferrer" target="_blank">
-              Start
+              View the Workshop
             </a>
           </Button>
         </section>

@@ -12,14 +12,20 @@ export default function Features() {
           &#47;* Evolve your app */
         </code>
       </div>
-
+      <section className="mx-auto max-w-5xl p-4">
+        While CockroachDB is great for handling distributed transactions and
+        storing your data, here are some more features to take your project to
+        the next level.
+      </section>
       <section className="mx-auto max-w-5xl px-4 py-6">
         <h2 className="-ml-4 mb-2 font-poppins text-3xl font-bold leading-none tracking-tight text-crl-deep-purple">
           <IconGradient className="mr-1 inline-block h-9 w-9" name="globe" />{" "}
           Geo-partition data in multi-region clusters
         </h2>
         <p className="mb-4 text-gray-800">
-          More details...
+          Multi-region capabilities make it easier to run global applications.
+          Data can be stored in different geographic regions by table or table
+          row. Data can also be replicated globally.
           <br />
           <TrackingLink
             className="text-crl-electric-purple hover:text-crl-action-blue hover:underline"
@@ -34,9 +40,15 @@ export default function Features() {
               Use Cases
             </figcaption>
             <ul className="list-disc pl-4 text-sm">
-              <li>Case 1</li>
-              <li>Case 2</li>
-              <li>Case 3</li>
+              <li>
+                Keep user data in a region close to the application deployment
+                they use
+              </li>
+              <li>Globally replicate a table of i18n translations</li>
+              <li>
+                Lock data to geographic data centers for compliance reason, i.e.
+                GDPR
+              </li>
             </ul>
           </figure>
           <figure className="md:basis-1/2">
@@ -156,7 +168,8 @@ export default function Features() {
           Stream Data
         </h2>
         <p className="mb-4 text-gray-800">
-          Change Data Capture More details..
+          Use Change Data Capture (CDC) to stream data as message to a
+          configurable destination when a row-level change is detected.
           <br />
           <TrackingLink
             className="text-crl-electric-purple hover:text-crl-action-blue hover:underline"
@@ -172,9 +185,12 @@ export default function Features() {
               Use Cases
             </figcaption>
             <ul className="list-disc pl-4 text-sm">
-              <li>Case 1</li>
-              <li>Case 2</li>
-              <li>Case 3</li>
+              <li>
+                Add real-time capabilities to your website using a combination
+                of WebHooks and WebSockets/Server-Sent Events
+              </li>
+              <li>Stream messages to Kafka or PubSub to trigger events</li>
+              <li>Send updates to data stores for machine learning models</li>
             </ul>
           </figure>
           <figure className="md:basis-1/2">
@@ -221,7 +237,10 @@ export default function Features() {
           CockroachDB as a Document Database
         </h2>
         <p className="mb-4 text-gray-800">
-          More details... Working with JSON
+          While CockroachDB is primarily a relational database, sometimes you
+          need to store and work with JSON data. JSON support using the JSONB
+          column type will allow you to optimally read and write data in a table
+          row.
           <br />
           <TrackingLink
             className="text-crl-electric-purple hover:text-crl-action-blue hover:underline"
@@ -236,9 +255,14 @@ export default function Features() {
               Use Cases
             </figcaption>
             <ul className="list-disc pl-4 text-sm">
-              <li>Case 1</li>
-              <li>Case 2</li>
-              <li>Case 3</li>
+              <li>
+                Store the result of an API call where the data has a variable
+                structure
+              </li>
+              <li>
+                Store application and user preferences in a UI friendly manner
+              </li>
+              <li>Store flexible data snapshots</li>
             </ul>
           </figure>
           <figure className="md:basis-1/2">
@@ -268,7 +292,8 @@ export default function Features() {
           Full Text Search
         </h2>
         <p className="mb-4 text-gray-800">
-          More details...
+          Perform natural-language searches on documents such as articles,
+          websites, or other written formats.
           <br />
           <TrackingLink
             className="text-crl-electric-purple hover:text-crl-action-blue hover:underline"
@@ -283,9 +308,9 @@ export default function Features() {
               Use Cases
             </figcaption>
             <ul className="list-disc pl-4 text-sm">
-              <li>Case 1</li>
-              <li>Case 2</li>
-              <li>Case 3</li>
+              <li>Search contents of blog posts and other article-type data</li>
+              <li>Search a list of products using their description</li>
+              <li>Show search result rankings</li>
             </ul>
           </figure>
           <figure className="md:basis-1/2">
@@ -316,7 +341,7 @@ export default function Features() {
           Working with Spatial Data
         </h2>
         <p className="mb-4 text-gray-800">
-          More details...
+          Efficiently store and query spatial data.
           <br />
           <TrackingLink
             className="text-crl-electric-purple hover:text-crl-action-blue hover:underline"
@@ -331,9 +356,9 @@ export default function Features() {
               Use Cases
             </figcaption>
             <ul className="list-disc pl-4 text-sm">
-              <li>Case 1</li>
-              <li>Case 2</li>
-              <li>Case 3</li>
+              <li>Search for stored locations in a geo-fenced area</li>
+              <li>Find locations within a radius of another location</li>
+              <li>Find the overlaps of two geometry regions</li>
             </ul>
           </figure>
           <figure className="md:basis-1/2">
@@ -364,7 +389,9 @@ export default function Features() {
           Intelligent Insights
         </h2>
         <p className="mb-4 text-gray-800">
-          More details...
+          Intelligent Insights exposes problems that CockroachDB has detected in
+          your workloads and schemas. It also offers recommendations to improve
+          the performance of your workloads.
           <br />
           <TrackingLink
             className="text-crl-electric-purple hover:text-crl-action-blue hover:underline"
@@ -379,9 +406,14 @@ export default function Features() {
               Use Cases
             </figcaption>
             <ul className="list-disc pl-4 text-sm">
-              <li>Case 1</li>
-              <li>Case 2</li>
-              <li>Case 3</li>
+              <li>
+                Identify SQL statements with high retry counts, slow execution,
+                or suboptimal plans.
+              </li>
+              <li>
+                Identify indexes that should be created, altered, replaced, or
+                dropped to improve performance.
+              </li>
             </ul>
           </figure>
           <figure className="md:basis-1/2">

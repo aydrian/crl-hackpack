@@ -100,7 +100,7 @@ export default function Careers() {
         </div>
         <img
           alt="Camp Roach"
-          className="mx-auto rounded-md md:mt-4 md:w-1/4 md:rotate-6 md:shadow-md"
+          className="mx-auto rounded-md object-cover md:mt-4 md:w-1/4 md:rotate-6 md:shadow-md"
           src={imgCampRoach}
         />
       </div>
@@ -127,12 +127,21 @@ export default function Careers() {
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="item-2">
-                <AccordionTrigger>Other Question?</AccordionTrigger>
-                <AccordionContent>It depends...</AccordionContent>
+                <AccordionTrigger>
+                  Where will interns be located?
+                </AccordionTrigger>
+                <AccordionContent>
+                  All interns will be expected to work from our NYC HQ.
+                </AccordionContent>
               </AccordionItem>
               <AccordionItem value="item-3">
-                <AccordionTrigger>Some other question?</AccordionTrigger>
-                <AccordionContent>It depends...</AccordionContent>
+                <AccordionTrigger>
+                  Are there location requirements for joining as a new grad?
+                </AccordionTrigger>
+                <AccordionContent>
+                  New grads will be expected to work out of our offices in NYC
+                  or Toronto.
+                </AccordionContent>
               </AccordionItem>
             </Accordion>
           </p>
@@ -175,7 +184,7 @@ export default function Careers() {
                     alt={`${staff.firstName} ${staff.lastName}`}
                     className={cn(
                       "aspect-square",
-                      singleRecruiter ? "w-[125px]" : "w-full"
+                      singleRecruiter ? "w-[150px]" : "w-full"
                     )}
                     src={staff.image}
                   />

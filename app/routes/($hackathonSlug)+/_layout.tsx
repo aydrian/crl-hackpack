@@ -83,14 +83,18 @@ export default function Layout() {
       <header className="flex items-center bg-white p-3">
         <div className="basis-3/12">
           <TrackingLink href="https://cockroachlabs.com">
-            <img alt="Cockroach Labs" className="w-[12.5rem]" src={Logo} />
+            <img
+              alt="Cockroach Labs"
+              className="w-full max-w-[12.5rem]"
+              src={Logo}
+            />
           </TrackingLink>
         </div>
         <div className="basis-6/12">
           <h1 className="text-center font-poppins text-3xl font-bold leading-none tracking-tight text-crl-deep-purple">
             Cockroach Labs HackPack
           </h1>
-          <nav className="mt-2 flex justify-center gap-4">
+          <nav className="mt-2 flex flex-wrap justify-center gap-x-2 gap-y-1 md:gap-4">
             <NavLink
               className={({ isActive }) =>
                 isActive

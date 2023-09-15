@@ -26,7 +26,7 @@ export default function Index() {
         <div>
           <IconGradient className="h-24 w-24" name="backpack" />
         </div>
-        <h1 className="font-poppins text-5xl font-bold leading-none tracking-tight">
+        <h1 className="text-center font-poppins text-5xl font-bold leading-none tracking-tight">
           Cockroach Labs HackPack
         </h1>
         <h2 className="font-poppins text-3xl font-semibold leading-none tracking-tight">
@@ -98,7 +98,7 @@ export default function Index() {
           The serverless database is a great fit for hackathons. Build using the
           free monthly resource alloance. Scale when needed.
         </p>
-        <div className="md:flex md:items-center md:justify-center md:gap-8">
+        <div className="sm:flex sm:items-center sm:justify-center sm:gap-8">
           <ul className="list-disc pl-4">
             <li>Postgres Compatible Database</li>
             <li>Elastic Scale</li>
@@ -107,7 +107,7 @@ export default function Index() {
             <li>10GB of storage and 50M RUs per month</li>
             <li>Use with your favorite language</li>
           </ul>
-          <div>
+          <div className="py-2">
             <Button
               asChild
               className="bg-gradient-to-r from-crl-dark-blue via-crl-electric-purple to-crl-iridescent-blue"
@@ -125,7 +125,7 @@ export default function Index() {
           It's dangerous to go alone... take this.
         </h3>
         <p>Choose your language and get started quickly.</p>
-        <ul className="py-4 text-center md:flex md:justify-around">
+        <ul className="flex flex-wrap gap-0.5 py-4 text-center sm:gap-4">
           <li className="max-w-sm">
             <Button
               asChild

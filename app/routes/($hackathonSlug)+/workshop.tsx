@@ -55,16 +55,18 @@ export default function Workshop() {
               </a>
             </Button>
           </section>
-          <section className="mx-auto max-w-2xl p-4 text-center md:flex md:justify-center md:gap-4">
+          <section className="mx-auto max-w-2xl p-4 text-center sm:flex sm:justify-center sm:gap-4">
             <img
               alt="Hackathon Shirt"
-              className="max-w-[200px] rounded-md shadow-md"
+              className="mx-auto w-full rounded-md shadow-md sm:max-w-[250px]"
               src={imgTShirt}
             />
-            <div className="relative text-center font-poppins text-3xl font-bold text-crl-deep-purple">
-              Workshop attends will receive the Cockroach Labs Hackathon
-              t-shirt.
-              <span className="text-light absolute bottom-0 left-0 mx-auto w-full text-center text-sm">
+            <div className="relative text-center font-poppins text-3xl font-bold text-crl-deep-purple sm:flex sm:flex-col sm:justify-between">
+              <div>
+                Workshop attends will receive the Cockroach Labs Hackathon
+                t-shirt.
+              </div>
+              <span className="text-light mx-auto w-full text-center text-sm">
                 (while supplies last)
               </span>
             </div>

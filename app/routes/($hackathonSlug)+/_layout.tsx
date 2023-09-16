@@ -177,8 +177,8 @@ export default function Layout() {
       <main className="grow">
         <Outlet />
       </main>
-      <footer className="flex items-center justify-between bg-crl-deep-purple p-4 text-sm font-bold text-white">
-        <div className="flex basis-1/3 items-center gap-2 text-xs">
+      <footer className="flex flex-col items-center justify-center gap-1 bg-crl-deep-purple p-4 text-sm font-bold text-white sm:flex-row sm:justify-between sm:gap-0">
+        <div className="flex items-center gap-2 text-xs sm:basis-1/3">
           <a
             href="https://instagram.com/cockroachdb"
             rel="noreferrer"
@@ -236,7 +236,7 @@ export default function Layout() {
             <span className="sr-only">GitHub</span>
           </a>
         </div>
-        <div className="basis-1/3 text-center">
+        <div className="text-center sm:basis-1/3">
           ©2023{" "}
           <TrackingLink
             className="hover:text-crl-electric-purple"
@@ -245,7 +245,7 @@ export default function Layout() {
             Cockroach Labs
           </TrackingLink>
         </div>
-        <div className="flex basis-1/3 items-center justify-end gap-2">
+        <div className="flex items-center justify-end gap-2 sm:basis-1/3">
           <a
             href="https://github.com/aydrian/crl-hackpack"
             rel="noreferrer"

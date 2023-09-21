@@ -1,4 +1,4 @@
-import { type LoaderArgs, json } from "@remix-run/node";
+import { type LoaderFunctionArgs, json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 
 import { SocialBar } from "~/components/social-bar.tsx";
@@ -23,7 +23,7 @@ import imgRoofParty from "~/images/roof-party.webp";
 import { findBySlug } from "~/utils/hackathons.server.ts";
 import { cn } from "~/utils/misc.ts";
 
-export async function loader({ params }: LoaderArgs) {
+export async function loader({ params }: LoaderFunctionArgs) {
   const { hackathonSlug } = params;
   const hackathon = await findBySlug(hackathonSlug, {
     id: true,

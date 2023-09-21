@@ -1,5 +1,9 @@
 import { cssBundleHref } from "@remix-run/css-bundle";
-import { type LinksFunction, type LoaderArgs, json } from "@remix-run/node";
+import {
+  type LinksFunction,
+  type LoaderFunctionArgs,
+  json
+} from "@remix-run/node";
 import {
   Links,
   LiveReload,
@@ -21,7 +25,7 @@ import { useNonce } from "~/utils/nonce-provider.ts";
 import { HackathonBanner } from "./routes/resources+/hackathon-banner.tsx";
 import { bannerCookie } from "./utils/cookies.server.ts";
 
-export async function loader({ params, request }: LoaderArgs) {
+export async function loader({ params, request }: LoaderFunctionArgs) {
   const { hackathonSlug } = params;
   const tracking = await hackathons.findBySlug(hackathonSlug, {
     referralId: true,

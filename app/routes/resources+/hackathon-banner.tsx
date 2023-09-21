@@ -1,11 +1,11 @@
-import { type ActionArgs, Response, redirect } from "@remix-run/node";
+import { type ActionFunctionArgs, redirect } from "@remix-run/node";
 import { Form, Link, useLocation } from "@remix-run/react";
 
 import { Icon } from "~/components/icon.tsx";
 import { Button } from "~/components/ui/button.tsx";
 import { bannerCookie } from "~/utils/cookies.server.ts";
 
-export async function action({ request }: ActionArgs) {
+export async function action({ request }: ActionFunctionArgs) {
   const formData = await request.formData();
   const intent = formData.get("intent")?.toString();
   if (!(intent === "close")) {

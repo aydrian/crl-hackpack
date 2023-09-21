@@ -1,7 +1,5 @@
 import type { Prisma } from "@prisma/client";
 
-import { Response } from "@remix-run/node";
-
 import { prisma } from "~/utils/db.server.ts";
 
 export async function findBySlug<T extends Prisma.HackathonSelect>(

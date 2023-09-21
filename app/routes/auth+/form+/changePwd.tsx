@@ -1,6 +1,6 @@
 import { conform, useForm } from "@conform-to/react";
 import { getFieldsetConstraint, parse } from "@conform-to/zod";
-import { type ActionArgs, json } from "@remix-run/node";
+import { type ActionFunctionArgs, json } from "@remix-run/node";
 import { useFetcher } from "@remix-run/react";
 import bcrypt from "bcryptjs";
 import { z } from "zod";
@@ -50,7 +50,7 @@ const ChangePwdSchema = z
     path: ["confirmPassword"]
   });
 
-export async function action({ request }: ActionArgs) {
+export async function action({ request }: ActionFunctionArgs) {
   const formData = await request.formData();
   const submission = parse(formData, {
     schema: ChangePwdSchema

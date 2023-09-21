@@ -1,7 +1,6 @@
 import {
-  type LoaderArgs,
-  Response,
-  type V2_MetaFunction,
+  type LoaderFunctionArgs,
+  type MetaFunction,
   json
 } from "@remix-run/node";
 import { NavLink, Outlet, useLoaderData } from "@remix-run/react";
@@ -12,7 +11,7 @@ import { Button } from "~/components/ui/button.tsx";
 import Logo from "~/images/Full-Logo-Horizontal_Full-Color-Light-BG.png";
 import { prisma } from "~/utils/db.server.ts";
 
-export async function loader({ params }: LoaderArgs) {
+export async function loader({ params }: LoaderFunctionArgs) {
   const { hackathonSlug: slug } = params;
   const hackathon = slug
     ? await prisma.hackathon
@@ -36,7 +35,7 @@ export async function loader({ params }: LoaderArgs) {
   return json({ hackathon });
 }
 
-export const meta: V2_MetaFunction<typeof loader> = ({ data }) => {
+export const meta: MetaFunction<typeof loader> = ({ data }) => {
   const title = data?.hackathon
     ? `Cockroach Labs HackPack for ${data?.hackathon?.name}`
     : "Cockroach Labs HackPack";

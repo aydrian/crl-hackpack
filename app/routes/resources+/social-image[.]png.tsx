@@ -1,4 +1,4 @@
-import type { LoaderArgs } from "@remix-run/node";
+import type { LoaderFunctionArgs } from "@remix-run/node";
 
 import satori, { type SatoriOptions } from "satori";
 import svg2img from "svg2img";
@@ -13,7 +13,7 @@ declare module "react" {
   }
 }
 
-export async function loader({ request }: LoaderArgs) {
+export async function loader({ request }: LoaderFunctionArgs) {
   const url = new URL(request.url);
   const hackathon = url.searchParams.get("hackathon");
   invariant(typeof hackathon === "string", "hackathon queryparam is expected");

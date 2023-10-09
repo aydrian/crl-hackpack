@@ -33,8 +33,9 @@ export async function findCurrent<T extends Prisma.HackathonSelect>(
   const hackathon = await prisma.hackathon.findFirst({
     select,
     where: {
-      OR: [{ startDate: { lte: lower } }, { endDate: { gte: upper } }]
+      AND: [{ startDate: { lte: lower } }, { endDate: { gte: upper } }]
     }
   });
+  console.log({ hackathon, lower, upper });
   return hackathon;
 }

@@ -17,7 +17,7 @@ export function TrackingLink({
     "utm_source",
     source ?? rootData?.tracking?.utmSource ?? "unknown"
   );
-  url.searchParams.append("utm_medium", "events");
+  url.searchParams.append("utm_medium", "event");
   url.searchParams.append("utm_campaign", "hackathon");
   if (url.hostname === "cockroachlabs.cloud") {
     url.searchParams.append(

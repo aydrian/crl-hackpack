@@ -1,5 +1,6 @@
 import { type LoaderFunctionArgs, json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
+import { getParams } from "remix-params-helper";
 
 import { Icon } from "~/components/icon.tsx";
 import { SocialBar } from "~/components/social-bar.tsx";
@@ -14,11 +15,12 @@ import {
   CardHeader,
   CardTitle
 } from "~/components/ui/card.tsx";
-import { findBySlug } from "~/utils/hackathons.server.ts";
+import { ParamsSchema, findBySlug } from "~/utils/hackathons.server.ts";
 import { cn } from "~/utils/misc.ts";
 
 export async function loader({ params }: LoaderFunctionArgs) {
-  const { hackathonSlug } = params;
+  const result = getParams(params, ParamsSchema);
+  const hackathonSlug = result.data?.hackathonSlug;
   const hackathon = await findBySlug(hackathonSlug, {
     id: true,
     name: true,

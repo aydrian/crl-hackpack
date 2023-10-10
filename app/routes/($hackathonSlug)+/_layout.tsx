@@ -3,35 +3,46 @@ import {
   type MetaFunction,
   json
 } from "@remix-run/node";
-import { NavLink, Outlet, useLoaderData } from "@remix-run/react";
+import {
+  NavLink,
+  Outlet,
+  useLoaderData,
+  useRouteLoaderData
+} from "@remix-run/react";
+import { getParams } from "remix-params-helper";
 
 import { Icon } from "~/components/icon.tsx";
 import { TrackingLink } from "~/components/tracking-link.tsx";
 import { Button } from "~/components/ui/button.tsx";
 import Logo from "~/images/Full-Logo-Horizontal_Full-Color-Light-BG.png";
 import { prisma } from "~/utils/db.server.ts";
+import { ParamsSchema } from "~/utils/hackathons.server.ts";
 
 export async function loader({ params }: LoaderFunctionArgs) {
-  const { hackathonSlug: slug } = params;
-  const hackathon = slug
-    ? await prisma.hackathon
-        .findUniqueOrThrow({
-          select: {
-            challenge: { select: { id: true } },
-            endDate: true,
-            id: true,
-            name: true,
-            slug: true,
-            startDate: true,
-            workshop: { select: { id: true } }
-          },
-          where: { slug }
-        })
-        .catch((err) => {
-          console.error(err);
-          throw new Response(null, { status: 404, statusText: "Not Found" });
-        })
-    : null;
+  const result = getParams(params, ParamsSchema);
+  const slug = result.data?.hackathonSlug;
+
+  if (!slug) {
+    return json({ hackathon: null });
+  }
+
+  const hackathon = await prisma.hackathon
+    .findUniqueOrThrow({
+      select: {
+        challenge: { select: { id: true } },
+        endDate: true,
+        id: true,
+        name: true,
+        slug: true,
+        startDate: true,
+        workshop: { select: { id: true } }
+      },
+      where: { slug }
+    })
+    .catch((err) => {
+      console.error(err);
+      throw new Response(null, { status: 404, statusText: "Not Found" });
+    });
   return json({ hackathon });
 }
 
@@ -74,6 +85,18 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
     { content: description, property: "og:description" }
   ];
 };
+
+export function useHackathon() {
+  const data = useRouteLoaderData<typeof loader>(
+    "routes/($hackathonSlug)+/_layout"
+  );
+  if (data === undefined) {
+    throw new Error(
+      "useHackathon must be used within the routes/($hackathonSlug)+/ route or its children"
+    );
+  }
+  return data.hackathon;
+}
 
 export default function Layout() {
   const { hackathon } = useLoaderData<typeof loader>();

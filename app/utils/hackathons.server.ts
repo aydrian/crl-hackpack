@@ -1,6 +1,12 @@
 import type { Prisma } from "@prisma/client";
 
+import { z } from "zod";
+
 import { prisma } from "~/utils/db.server.ts";
+
+export const ParamsSchema = z.object({
+  hackathonSlug: z.string().optional()
+});
 
 export async function findBySlug<T extends Prisma.HackathonSelect>(
   slug: string | undefined,

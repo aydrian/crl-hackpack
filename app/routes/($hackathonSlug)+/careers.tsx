@@ -1,5 +1,6 @@
 import { type LoaderFunctionArgs, json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
+import { getParams } from "remix-params-helper";
 
 import { SocialBar } from "~/components/social-bar.tsx";
 import { TrackingLink } from "~/components/tracking-link.tsx";
@@ -20,11 +21,13 @@ import imgCampRoach from "~/images/camp-roach.webp";
 import imgCampRoach2 from "~/images/camp-roach-2.webp";
 import imgOffice from "~/images/office.webp";
 import imgRoofParty from "~/images/roof-party.webp";
-import { findBySlug } from "~/utils/hackathons.server.ts";
+import { ParamsSchema, findBySlug } from "~/utils/hackathons.server.ts";
 import { cn } from "~/utils/misc.ts";
 
 export async function loader({ params }: LoaderFunctionArgs) {
-  const { hackathonSlug } = params;
+  const result = getParams(params, ParamsSchema);
+  const hackathonSlug = result.data?.hackathonSlug;
+
   const hackathon = await findBySlug(hackathonSlug, {
     id: true,
     name: true,

@@ -1,25 +1,11 @@
-import { type LoaderFunctionArgs, json } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
-
 import { Icon, IconGradient } from "~/components/icon.tsx";
 import { TrackingLink } from "~/components/tracking-link.tsx";
 import { Button } from "~/components/ui/button.tsx";
-import { findBySlug } from "~/utils/hackathons.server.ts";
 
-export async function loader({ params }: LoaderFunctionArgs) {
-  const { hackathonSlug } = params;
-  const hackathon = await findBySlug(hackathonSlug, {
-    endDate: true,
-    id: true,
-    name: true,
-    startDate: true
-  });
-
-  return json({ hackathon });
-}
+import { useHackathon } from "./_layout.tsx";
 
 export default function Index() {
-  const { hackathon } = useLoaderData<typeof loader>();
+  const hackathon = useHackathon();
   return (
     <>
       <div className="flex flex-col items-center justify-center gap-2 bg-hero-pattern bg-cover bg-no-repeat p-4 text-white">

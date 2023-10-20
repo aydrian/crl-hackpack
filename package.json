@@ -86,14 +86,5 @@
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
-  },
-  "overrides": {
-    "remix-auth": {
-      "@remix-run/react": "^2.0.0",
-      "@remix-run/server-runtime": "^2.0.0"
-    },
-    "remix-auth-form": {
-      "@remix-run/server-runtime": "^2.0.0"
-    }
   }
 }

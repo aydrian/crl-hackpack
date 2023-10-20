@@ -6,5 +6,4 @@ node_modules
 /public/build
 .env
 
-/prisma/staff-pics
-/prisma/create-htn2023.ts
+/prisma/hackathons

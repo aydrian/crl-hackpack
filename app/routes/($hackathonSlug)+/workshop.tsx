@@ -1,15 +1,13 @@
 import { type LoaderFunctionArgs, json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
-import { getParams } from "remix-params-helper";
 
 import { Button } from "~/components/ui/button.tsx";
 import imgTShirt from "~/images/t-shirt.webp";
 import { useHints } from "~/utils/client-hints.tsx";
-import { ParamsSchema, findBySlug } from "~/utils/hackathons.server.ts";
+import { findBySlug } from "~/utils/hackathons.server.ts";
 
 export async function loader({ params }: LoaderFunctionArgs) {
-  const result = getParams(params, ParamsSchema);
-  const hackathonSlug = result.data?.hackathonSlug;
+  const { hackathonSlug } = params;
 
   const hackathon = await findBySlug(hackathonSlug, {
     id: true,

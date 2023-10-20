@@ -9,18 +9,15 @@ import {
   useLoaderData,
   useRouteLoaderData
 } from "@remix-run/react";
-import { getParams } from "remix-params-helper";
 
 import { Icon } from "~/components/icon.tsx";
 import { TrackingLink } from "~/components/tracking-link.tsx";
 import { Button } from "~/components/ui/button.tsx";
 import Logo from "~/images/Full-Logo-Horizontal_Full-Color-Light-BG.png";
 import { prisma } from "~/utils/db.server.ts";
-import { ParamsSchema } from "~/utils/hackathons.server.ts";
 
 export async function loader({ params }: LoaderFunctionArgs) {
-  const result = getParams(params, ParamsSchema);
-  const slug = result.data?.hackathonSlug;
+  const { hackathonSlug: slug } = params;
 
   if (!slug) {
     return json({ hackathon: null });
@@ -43,6 +40,7 @@ export async function loader({ params }: LoaderFunctionArgs) {
       console.error(err);
       throw new Response(null, { status: 404, statusText: "Not Found" });
     });
+  console.log({ hackathon });
   return json({ hackathon });
 }
 

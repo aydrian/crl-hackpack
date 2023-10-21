@@ -40,7 +40,7 @@ export async function loader({ params }: LoaderFunctionArgs) {
       console.error(err);
       throw new Response(null, { status: 404, statusText: "Not Found" });
     });
-  console.log({ hackathon });
+
   return json({ hackathon });
 }
 

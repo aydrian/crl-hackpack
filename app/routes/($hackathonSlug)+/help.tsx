@@ -25,7 +25,7 @@ export async function loader({ params }: LoaderFunctionArgs) {
     slug: true,
     staff: {
       orderBy: { staff: { firstName: "asc" } },
-      select: { alumYear: true, roles: true, staff: true }
+      select: { alumYear: true, availability: true, roles: true, staff: true }
     }
   });
 
@@ -34,6 +34,10 @@ export async function loader({ params }: LoaderFunctionArgs) {
 
 export default function Help() {
   const { hackathon } = useLoaderData<typeof loader>();
+  const shortWeekday = new Intl.DateTimeFormat(undefined, {
+    timeZone: "UTC",
+    weekday: "short"
+  });
   return (
     <>
       <div className="flex flex-col items-center justify-center gap-2 bg-hero-pattern bg-cover bg-no-repeat p-4 text-white">
@@ -53,7 +57,7 @@ export default function Help() {
             Come find one of our team members to help you out.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            {hackathon.staff.map(({ alumYear, roles, staff }) => (
+            {hackathon.staff.map(({ alumYear, availability, roles, staff }) => (
               <Card
                 className="flex max-w-[210px] flex-col overflow-hidden"
                 key={staff.id}
@@ -79,24 +83,42 @@ export default function Help() {
                   <SocialBar staff={staff} />
                 </CardHeader>
                 <CardContent className="grow p-4 pt-0">
+                  <div className="font-medium">Available</div>
+                  <div className="text- flex w-full flex-wrap justify-start gap-1">
+                    {availability.length === 0 ? (
+                      <Badge className="rounded-md bg-crl-action-purple px-1">
+                        All Days
+                      </Badge>
+                    ) : undefined}
+                    {availability.sort().map((availability) => (
+                      <Badge
+                        className="rounded-md bg-crl-action-purple px-1"
+                        key={availability}
+                      >
+                        {shortWeekday.format(new Date(availability))}
+                      </Badge>
+                    ))}
+                  </div>
                   <div className="font-medium">Ask me about...</div>
                   <p className="text-sm font-light text-gray-800">
                     {staff.askAbout}
                   </p>
                 </CardContent>
-                <CardFooter className="flex-wrap gap-1 p-4 pt-0">
-                  {roles.sort().map((role) => (
-                    <Badge
-                      className={cn(
-                        role === "judge" && "bg-crl-deep-purple",
-                        role === "mentor" && "bg-crl-action-blue",
-                        role === "recruiter" && "bg-crl-electric-purple"
-                      )}
-                      key={role}
-                    >
-                      {role}
-                    </Badge>
-                  ))}
+                <CardFooter className="flex-col gap-1 p-4 pt-0">
+                  <div className="flex flex-wrap gap-1">
+                    {roles.sort().map((role) => (
+                      <Badge
+                        className={cn(
+                          role === "judge" && "bg-crl-deep-purple",
+                          role === "mentor" && "bg-crl-action-blue",
+                          role === "recruiter" && "bg-crl-electric-purple"
+                        )}
+                        key={role}
+                      >
+                        {role}
+                      </Badge>
+                    ))}
+                  </div>
                 </CardFooter>
               </Card>
             ))}

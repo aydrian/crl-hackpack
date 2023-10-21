@@ -66,10 +66,11 @@ enum HackathonRole {
 }
 
 model HackathonStaff {
-  hackathonId String          @map("hackathon_id") @db.Uuid
-  staffId     String          @map("staff_id") @db.Uuid
-  roles       HackathonRole[]
-  alumYear    String?         @map("alum_year")
+  hackathonId  String          @map("hackathon_id") @db.Uuid
+  staffId      String          @map("staff_id") @db.Uuid
+  roles        HackathonRole[]
+  alumYear     String?         @map("alum_year")
+  availability DateTime[]      @default([]) @db.Date()
 
   hackathon Hackathon @relation(fields: [hackathonId], references: [id])
   staff     Staff     @relation(fields: [staffId], references: [id])

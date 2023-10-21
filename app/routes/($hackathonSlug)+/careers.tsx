@@ -32,7 +32,7 @@ export async function loader({ params }: LoaderFunctionArgs) {
     slug: true,
     staff: {
       orderBy: { staff: { firstName: "asc" } },
-      select: { alumYear: true, staff: true },
+      select: { alumYear: true, availability: true, staff: true },
       where: { roles: { has: "recruiter" } }
     }
   });
@@ -43,6 +43,10 @@ export async function loader({ params }: LoaderFunctionArgs) {
 export default function Careers() {
   const { hackathon } = useLoaderData<typeof loader>();
   const singleRecruiter = hackathon?.staff.length === 1;
+  const shortWeekday = new Intl.DateTimeFormat(undefined, {
+    timeZone: "UTC",
+    weekday: "short"
+  });
   return (
     <>
       <div className="flex flex-col items-center justify-center gap-2 bg-hero-pattern bg-cover bg-no-repeat p-4 text-white">
@@ -164,7 +168,7 @@ export default function Careers() {
             in-person recruiter.
           </p>
           <div>
-            {hackathon.staff.map(({ alumYear, staff }) => (
+            {hackathon.staff.map(({ alumYear, availability, staff }) => (
               <Card
                 className={cn(
                   "overflow-hidden",
@@ -185,7 +189,7 @@ export default function Careers() {
                     alt={`${staff.firstName} ${staff.lastName}`}
                     className={cn(
                       "aspect-square",
-                      singleRecruiter ? "w-[150px]" : "w-full"
+                      singleRecruiter ? "w-[215px]" : "w-full"
                     )}
                     src={staff.image}
                   />
@@ -198,6 +202,22 @@ export default function Careers() {
                   <CardTitle>{`${staff.firstName} ${staff.lastName}`}</CardTitle>
                   <CardDescription>{staff.title}</CardDescription>
                   <SocialBar staff={staff} />
+                  <div className="flex w-full flex-wrap items-center gap-1 text-xs">
+                    <div>Available:</div>
+                    {availability.length === 0 ? (
+                      <Badge className="rounded-md bg-crl-action-purple px-1 text-xs">
+                        All Days
+                      </Badge>
+                    ) : undefined}
+                    {availability.sort().map((availability) => (
+                      <Badge
+                        className="rounded-md bg-crl-action-purple px-1"
+                        key={availability}
+                      >
+                        {shortWeekday.format(new Date(availability))}
+                      </Badge>
+                    ))}
+                  </div>
                 </CardHeader>
               </Card>
             ))}

@@ -6,15 +6,17 @@ async function seed() {
   const testHackathonId = "061c4a4d-2ec5-446f-a7f7-b68564bd3617";
   const today = new Date();
   const year = today.getFullYear();
-  const nextWeek = new Date();
-  nextWeek.setDate(nextWeek.getDate() + 7);
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  const dayAfterTomorrow = new Date();
+  dayAfterTomorrow.setDate(tomorrow.getDate() + 1);
   const slug = `test-${year}`;
 
   console.log(`🧑‍💻 Creating Test Hackathon (${slug}) Hackathon...`);
 
   await prisma.hackathon.create({
     data: {
-      endDate: nextWeek,
+      endDate: dayAfterTomorrow,
       id: testHackathonId,
       name: "Test Hackathon",
       referralId: `hackathon_test${year}`,
@@ -93,11 +95,13 @@ async function seed() {
           staffId: aydrianId
         },
         {
+          availability: [dayAfterTomorrow],
           hackathonId: testHackathonId,
-          roles: ["mentor"],
+          roles: ["judge"],
           staffId: bilalId
         },
         {
+          availability: [today, tomorrow],
           hackathonId: testHackathonId,
           roles: ["recruiter"],
           staffId: lesleyId
